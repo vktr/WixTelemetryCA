@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 
-project("WixTelemetryExtension")
+project("WixTelemetryCA")
 
 # Get current architecture
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -10,7 +10,7 @@ else(CMAKE_SIZEOF_VOID_P EQUAL 8)
 endif(CMAKE_SIZEOF_VOID_P EQUAL 8)
 
 set(SOURCES
-    src/TelemetryExtension
+    src/TelemetryCollect
 )
 
 include_directories(
@@ -32,13 +32,13 @@ add_definitions(
 )
 
 add_library(
-    WixTelemetryExtension
+    WixTelemetryCA
     SHARED
     ${SOURCES}
 )
 
 target_link_libraries(
-    WixTelemetryExtension
+    WixTelemetryCA
     dutil
     mincore
     msi

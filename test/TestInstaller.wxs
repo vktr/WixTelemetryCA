@@ -28,7 +28,7 @@
     <Property Id="TELEMETRY_TARGET_URL" Value="http://requestb.in/1cd4jzh1" />
 
     <Binary Id="TelemetryCollector"
-            SourceFile="$(var.BuildDirectory)/WixTelemetryExtension.dll"/> 
+            SourceFile="$(var.BuildDirectory)/WixTelemetryCA.dll"/> 
 
     <CustomAction Id="CollectTelemetry"
                   BinaryKey="TelemetryCollector"
@@ -44,10 +44,10 @@
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="$(var.PlatformProgramFilesFolder)">
         <Directory Id="INSTALLLOCATION" Name="TelemetryTest">
-          <Component Id="C_TelemetryExtension" Guid="811c7a5f-14bb-43fb-8bde-2680744b3d32">
-            <File Id="F_TelemetryExtension"
-                  Name="WixTelemetryExtension.dll"
-                  Source="$(var.BuildDirectory)/WixTelemetryExtension.dll"
+          <Component Id="C_TelemetryCA" Guid="811c7a5f-14bb-43fb-8bde-2680744b3d32">
+            <File Id="F_TelemetryCA"
+                  Name="WixTelemetryCA.dll"
+                  Source="$(var.BuildDirectory)/WixTelemetryCA.dll"
                   KeyPath="yes" />
           </Component>
         </Directory>
@@ -55,7 +55,7 @@
     </Directory>
 
     <Feature Id="Complete" Title="Complete" Level="1">
-      <ComponentRef Id="C_TelemetryExtension" />
+      <ComponentRef Id="C_TelemetryCA" />
     </Feature>
   </Product>
 </Wix>

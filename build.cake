@@ -56,7 +56,7 @@ Task("Build")
                 .SetPlatformTarget(PlatformTarget.x64);
     }
 
-    MSBuild(OutputDirectory + File("WixTelemetryExtension.sln"), settings);
+    MSBuild(OutputDirectory + File("WixTelemetryCA.sln"), settings);
 });
 
 Task("Build-Test-Installer")

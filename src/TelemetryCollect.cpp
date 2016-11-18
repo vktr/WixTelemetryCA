@@ -28,7 +28,7 @@ extern "C" __declspec(dllexport) UINT __stdcall CollectTelemetry(MSIHANDLE hInst
     WcaLog(LOGMSG_STANDARD, "Collecting (anonymous) telemetry");
 
     HINTERNET hSession = WinHttpOpen(
-        L"WixTelemetryExtension",
+        L"WixTelemetryCA",
         WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,
         WINHTTP_NO_PROXY_NAME,
         WINHTTP_NO_PROXY_BYPASS,
