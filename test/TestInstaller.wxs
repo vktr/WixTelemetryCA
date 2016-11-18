@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?if $(var.Platform) = "x64" ?>
+    <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
+    <?define UpgradeCode = "6950c7f6-53f4-4eae-93c0-04df59aa1c35" ?>
+<?else ?>
+    <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
+    <?define UpgradeCode = "71f5af75-7f71-458e-be92-57cbe1469272" ?>
+<?endif ?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+
+  <Product Id="*"
+           Name="TelemetryTestInstaller"
+           Language="1033"
+           Version="1.0.0.0"
+           Manufacturer="CAIntroInstall"
+           UpgradeCode="$(var.UpgradeCode)">
+
+    <Package InstallerVersion="200"
+             Compressed="yes" />
+
+    <Media Id="1"
+           Cabinet="media1.cab"
+           EmbedCab="yes" />
+
+    <Property Id="TELEMETRY_TARGET_URL" Value="http://requestb.in/1cd4jzh1" />
+
+    <Binary Id="TelemetryCollector"
+            SourceFile="$(var.BuildDirectory)/WixTelemetryExtension.dll"/> 
+
+    <CustomAction Id="CollectTelemetry"
+                  BinaryKey="TelemetryCollector"
+                  DllEntry="CollectTelemetry"
+                  Execute="immediate"
+                  Return="check"
+                  HideTarget="no" /> 
+
+    <InstallExecuteSequence>
+      <Custom Action="CollectTelemetry" After="InstallFinalize" />
+    </InstallExecuteSequence> 
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="$(var.PlatformProgramFilesFolder)">
+        <Directory Id="INSTALLLOCATION" Name="TelemetryTest">
+          <Component Id="C_TelemetryExtension" Guid="811c7a5f-14bb-43fb-8bde-2680744b3d32">
+            <File Id="F_TelemetryExtension"
+                  Name="WixTelemetryExtension.dll"
+                  Source="$(var.BuildDirectory)/WixTelemetryExtension.dll"
+                  KeyPath="yes" />
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id="Complete" Title="Complete" Level="1">
+      <ComponentRef Id="C_TelemetryExtension" />
+    </Feature>
+  </Product>
+</Wix>

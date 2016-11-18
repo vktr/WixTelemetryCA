@@ -1,0 +1,16 @@
+build-x64/
+build-x86/
+tools/Addins
+tools/Cake
+tools/nuget.exe
+tools/WiX
+
+[D|d]ebug
+[R|r]elease
+
+.vs
+*.db
+*.opendb
+*.suo
+*.sdf
+*.user
