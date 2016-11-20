@@ -95,7 +95,21 @@ extern "C" __declspec(dllexport) UINT __stdcall CollectTelemetry(MSIHANDLE hInst
         -1,
         WINHTTP_ADDREQ_FLAG_ADD);
 
-    LPSTR data = "{ \"foo\": 123 }";
+    OSVERSIONINFO vi;
+    vi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+
+    if (!GetVersionEx(&vi))
+    {
+        WcaLog(LOGMSG_STANDARD, "GetVersionEx failed");
+        ExitFunctionWithLastError(hRes);
+    }
+
+    char version[1024];
+    snprintf(
+        version,
+        ARRAYSIZE(version),
+        "{ \"dwBuildNumber\": %d, \"dwMajorVersion\": %d, \"dwMinorVersion\": %d, \"dwPlatformId\": %d }",
+        vi.dwBuildNumber, vi.dwMajorVersion, vi.dwMinorVersion, vi.dwPlatformId);
 
     WcaLog(LOGMSG_STANDARD, "Sending (anonymous) telemetry data");
 
@@ -103,9 +117,9 @@ extern "C" __declspec(dllexport) UINT __stdcall CollectTelemetry(MSIHANDLE hInst
         hRequest,
         WINHTTP_NO_ADDITIONAL_HEADERS,
         NULL,
-        data,
-        strlen(data),
-        strlen(data),
+        version,
+        strlen(version),
+        strlen(version),
         NULL))
     {
         char buf[256];
