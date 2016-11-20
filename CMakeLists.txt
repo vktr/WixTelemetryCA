@@ -10,6 +10,7 @@ else(CMAKE_SIZEOF_VOID_P EQUAL 8)
 endif(CMAKE_SIZEOF_VOID_P EQUAL 8)
 
 set(SOURCES
+    src/Registry
     src/TelemetryCollect
 )
 
@@ -18,7 +19,7 @@ include_directories(
 )
 
 link_directories(
-    tools/WiX/tools/sdk/vs2015/lib/${ARCH}/
+    tools/WiX/tools/sdk/vs2010/lib/${ARCH}/
 )
 
 add_definitions(
@@ -40,7 +41,8 @@ add_library(
 target_link_libraries(
     WixTelemetryCA
     dutil
-    mincore
     msi
+    version
     wcautil
+    winhttp
 )

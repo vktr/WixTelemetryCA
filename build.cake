@@ -28,13 +28,13 @@ Task("Generate-Project")
     .Does(() =>
 {
     var generator = (platform == "x86")
-        ? "Visual Studio 14"
-        : "Visual Studio 14 Win64";
+        ? "Visual Studio 10"
+        : "Visual Studio 10 Win64";
 
     CMake("./", new CMakeSettings {
       OutputPath = OutputDirectory,
       Generator = generator,
-      Toolset = "v140"
+      Toolset = "v100"
     });
 });
 
